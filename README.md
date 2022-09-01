@@ -61,6 +61,7 @@ The agile methodology was used in developing this project through Github project
 
 The 3 user story epics above were broken down into Milestones on the Github project and each user story in the given Milestone was further broken down into individual issues to facilitate completion of each user story.
 
+Please view the Github projects board [here](https://github.com/users/StephenB92/projects/4).
 
 ## Data Models
 
