@@ -84,9 +84,15 @@ You can view the details of the database schema [here](documentation/database-sc
 2. CSS3
 3. Python
 
-### Frameworks and Libraries
+### Frameworks,  Libraries and Online Tools
 1. Django
 2. Bootstrap
+3. Github - used for agile method of planning and for version control of the project
+4. Heroku - used for site deployment
+3. Lucidchart - used to map the database schema
+4. Balsamiq - used to create wireframes
+
+
 
 
 ## Testing
@@ -94,3 +100,5 @@ You can view the details of the database schema [here](documentation/database-sc
 ## Bugs and Fixes
 
 ## Credits/Acknowledgements 
+
+- The Code Institute Walkthrough Project: "I think therefore I blog".
