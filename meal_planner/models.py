@@ -10,7 +10,6 @@ class Recipe(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE,
                                 related_name='recipes')
-    name = models.CharField(max_length=80)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
     suitable_for = models.CharField(max_length=80)
@@ -35,9 +34,8 @@ class Recipe(models.Model):
 
 
 class Comment(models.Model):
-    dish_name = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                                  related_name='comments')
-    name = models.CharField(max_length=80)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
+    user_id = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -47,4 +45,4 @@ class Comment(models.Model):
         ordering = ['created_on']
 
     def __str__(self):
-        return f"Comment {self.body} by {self.name}"
+        return f"Comment {self.body} by {self.user_id}"

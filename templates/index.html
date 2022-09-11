@@ -20,7 +20,7 @@
                                 <img class="card-img-top" src=" {{ recipe.featured_image.url }}">
                                 {% endif %}
                                 <div class="image-flash">
-                                    <p class="author">Name: {{ recipe.name }}</p>
+                                    <p class="author">Created by: {{ recipe.user_id }}</p>
                                 </div>
                             </div>
                             <a href="{% url 'recipe_detail' recipe.slug %}" class="post-link">
