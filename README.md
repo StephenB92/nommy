@@ -99,6 +99,8 @@ You can view the details of the database schema [here](documentation/database-sc
 
 ## Bugs and Fixes
 
+- While coding the comment functionality, I kept receiving an error where a user can only post one comment across the entire site. 
+
 ## Credits/Acknowledgements 
 
 - The Code Institute Walkthrough Project: "I think therefore I blog".

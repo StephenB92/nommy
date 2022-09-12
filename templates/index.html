@@ -20,16 +20,16 @@
                                 <img class="card-img-top" src=" {{ recipe.featured_image.url }}">
                                 {% endif %}
                                 <div class="image-flash">
-                                    <p class="author">Created by: {{ recipe.user_id }}</p>
+                                    <p class="author">Created by: {{ recipe.creator }}</p>
                                 </div>
                             </div>
                             <a href="{% url 'recipe_detail' recipe.slug %}" class="post-link">
-                                <h2 class="card-title">{{ recipe.dish_name }}</h2>
-                                <p class="card-text">{{ recipe.description }}</p>
+                                <h2 class="card-title">{{ recipe.dish_id | safe }}</h2>
+                                <p class="card-text">{{ recipe.description | safe }}</p>
                             </a>
                             <hr />
                             <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
-                                {{ recipe.likes }}</p>
+                                {{ recipe.number_of_likes }}</p>
                         </div>
                     </div>
                 </div>

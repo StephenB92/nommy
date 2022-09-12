@@ -6,9 +6,9 @@ STATUS = ((0, "Draft"), (1, "Published"))
 
 
 class Recipe(models.Model):
-    dish_name = models.CharField(max_length=200, unique=True)
+    dish_id = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE,
+    creator = models.ForeignKey(User, on_delete=models.CASCADE,
                                 related_name='recipes')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
@@ -21,13 +21,13 @@ class Recipe(models.Model):
     image = CloudinaryField('image', default='placeholder')
     status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='recipe_likes',
-                                   blank=True)
+                                   default=None, blank=True)
 
     class Meta:
         ordering = ['-created_on']
 
     def __str__(self):
-        return self.dish_name
+        return self.dish_id
 
     def number_of_likes(self):
         return self.likes.count()
@@ -35,8 +35,7 @@ class Recipe(models.Model):
 
 class Comment(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
-    user_id = models.CharField(max_length=80)
-    email = models.EmailField()
+    name = models.CharField(max_length=80)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
@@ -45,4 +44,4 @@ class Comment(models.Model):
         ordering = ['created_on']
 
     def __str__(self):
-        return f"Comment {self.body} by {self.user_id}"
+        return f"Comment {self.body} by {self.name}"
