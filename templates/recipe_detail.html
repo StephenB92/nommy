@@ -6,32 +6,35 @@
     <div class="container">
         <div class="row g-0">
             <div class="col-md-6 masthead-text">
-                <h1 class="post-title">
+                <h1 class="recipe-title">
                     {{ recipe.dish_id | safe }}
                 </h1>
-                <p class="post-subtitle"> {{ recipe.creator }} | {{ recipe.created_on }} </p>
+                <p class="recipe-subtitle"> {{ recipe.creator }} | {{ recipe.created_on }} </p>
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->
-                {% if "placeholder" in recipe.featured_image.url %}
+                {% if "placeholder" in recipe.image.url %}
                 <img src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg" width="100%">
                 {% else %}
-                <img src="" width="100%">
+                <img src=" {{ recipe.image.url }}" width="100%">
                 {% endif %}
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    {{ recipe.description | safe }}
+                </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="container">
     <div class="row">
         <div class="col card mb-4  mt-3 left  top">
-            <div class="card-body">
-                <p class="card-text ">
-                    {{ recipe.description | safe }}
+            <div class="card-body top">
+                <p class="card-text">
+                    {{ recipe.method | safe }}
                 </p>
                 <div class="row">
-
                     <div class="col-1">
                         <strong>
                             {% if user.is_authenticated %}

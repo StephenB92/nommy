@@ -84,7 +84,7 @@ You can view the details of the database schema [here](documentation/database-sc
 2. CSS3
 3. Python
 
-### Frameworks,  Libraries and Online Tools
+### Frameworks, Libraries and Online Tools
 1. Django
 2. Bootstrap
 3. Github - used for agile method of planning and for version control of the project
@@ -104,3 +104,4 @@ You can view the details of the database schema [here](documentation/database-sc
 ## Credits/Acknowledgements 
 
 - The Code Institute Walkthrough Project: "I think therefore I blog".
+- Pexels for the stock images used in this project.

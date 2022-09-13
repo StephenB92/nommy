@@ -13,17 +13,17 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="image-container">
-                                {% if "placeholder" in recipe.featured_image.url %}
+                                {% if "placeholder" in recipe.image.url %}
                                 <img class="card-img-top"
                                     src="https://codeinstitute.s3.amazonaws.com/fullstack/blog/default.jpg">
                                 {% else %}
-                                <img class="card-img-top" src=" {{ recipe.featured_image.url }}">
+                                <img class="card-img-top" src=" {{ recipe.image.url }}">
                                 {% endif %}
                                 <div class="image-flash">
                                     <p class="author">Created by: {{ recipe.creator }}</p>
                                 </div>
                             </div>
-                            <a href="{% url 'recipe_detail' recipe.slug %}" class="post-link">
+                            <a href="{% url 'recipe_detail' recipe.slug %}" class="recipe-link">
                                 <h2 class="card-title">{{ recipe.dish_id | safe }}</h2>
                                 <p class="card-text">{{ recipe.description | safe }}</p>
                             </a>
