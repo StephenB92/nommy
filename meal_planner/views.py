@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import Recipe
-from .forms import CommentForm
+from .forms import CommentForm, CreateRecipeForm
 
 
 class RecipeList(generic.ListView):
@@ -74,3 +74,21 @@ class RecipeLikes(View):
             recipe.likes.add(request.user)
         
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
+
+
+class RecipeCreate(View):
+    def get(self, request, *args, **kwargs):
+
+        create_form = CreateRecipeForm(data=request.POST)
+        if create_form.is_valid():
+            create_form.save()
+        else:
+            create_form = CommentForm()
+
+            return render(
+                request,
+                "create_recipe.html",
+                {
+                    "create_form": CreateRecipeForm(),
+                    },
+                )
