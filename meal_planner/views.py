@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
+from django.template.defaultfilters import slugify
 from .models import Recipe
 from .forms import CommentForm, CreateRecipeForm
 
@@ -40,7 +41,7 @@ class RecipeDetail(View):
         liked = False
         if recipe.likes.filter(id=self.request.user.id).exists():
             liked = True
-        
+
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment_form.instance.name = request.user.username
@@ -63,7 +64,6 @@ class RecipeDetail(View):
         )
 
 
-
 class RecipeLikes(View):
     def post(self, request, slug):
         recipe = get_object_or_404(Recipe, slug=slug)
@@ -72,23 +72,32 @@ class RecipeLikes(View):
             recipe.likes.remove(request.user)
         else:
             recipe.likes.add(request.user)
-        
+
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 
-class RecipeCreate(View):
-    def get(self, request, *args, **kwargs):
+class RecipeCreate(generic.CreateView):
+    form_class = CreateRecipeForm
+    template_name = 'create_recipe.html'
+    success_message = "%(calculated_field)s was created successfully"
 
-        create_form = CreateRecipeForm(data=request.POST)
-        if create_form.is_valid():
-            create_form.save()
-        else:
-            create_form = CommentForm()
+    def form_valid(self, form):
+        """
+        This method is called when valid form data has been posted.
+        The signed in user is set as the creator of the recipe.
+        """
+        form.instance.creator = self.request.user
+        form.instance.recipe = slugify(recipe)
+        form.save()
+        return super().form_valid(form)
 
-            return render(
-                request,
-                "create_recipe.html",
-                {
-                    "create_form": CreateRecipeForm(),
-                    },
-                )
+    def get_success_message(self, cleaned_data):
+        """
+        This function overrides the get_success_message() method to add
+        the recipe title into the success message.
+        source: https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
+        """
+        return self.success_message % dict(
+            cleaned_data,
+            calculated_field=self.object.title,
+        )
