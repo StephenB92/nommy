@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
+from django.shortcuts import reverse
 from cloudinary.models import CloudinaryField
 
 STATUS = ((0, "Draft"), (1, "Published"))
@@ -26,18 +28,30 @@ class Recipe(models.Model):
     class Meta:
         ordering = ['-created_on']
 
+    # Credit to Stack Overflow for the "save" method below.
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.dish_id)
+        super(Recipe, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.dish_id
 
     def get_absolute_url(self):
         return reverse('recipe_detail', kwargs={'slug': self.slug})
 
+    # Credit to Stack Overflow for the "get_STATUS_display" method below.
+
+    def get_STATUS_display(self):
+        return self.status
+
     def number_of_likes(self):
         return self.likes.count()
 
 
 class Comment(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name='comments')
     name = models.CharField(max_length=80)
     body = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)

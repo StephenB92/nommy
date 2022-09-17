@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
-from django.template.defaultfilters import slugify
 from .models import Recipe
-from .forms import CommentForm, CreateRecipeForm
+from .forms import CommentForm, CreateRecipeForm, UpdateRecipeForm
 
 
 class RecipeList(generic.ListView):
@@ -13,9 +12,9 @@ class RecipeList(generic.ListView):
     paginate_by = 9
 
 
-class RecipeDetail(View):
+class RecipeDetail(generic.DetailView):
     def get(self, request, slug, *args, **kwargs):
-        queryset = Recipe.objects.filter(status=1)
+        queryset = Recipe.objects.all()
         recipe = get_object_or_404(queryset, slug=slug)
         comments = recipe.comments.filter(approved=True).order_by('created_on')
         liked = False
@@ -87,7 +86,6 @@ class RecipeCreate(generic.CreateView):
         The signed in user is set as the creator of the recipe.
         """
         form.instance.creator = self.request.user
-        form.instance.recipe = slugify(recipe)
         form.save()
         return super().form_valid(form)
 
@@ -101,3 +99,43 @@ class RecipeCreate(generic.CreateView):
             cleaned_data,
             calculated_field=self.object.title,
         )
+
+
+class RecipeUpdate(generic.CreateView):
+    form_class = UpdateRecipeForm
+    template_name = 'update_recipe.html'
+    success_message = "%(calculated_field)s was updated successfully"
+
+    def form_valid(self, form):
+        """
+        This method is called when valid form data has been posted.
+        The signed in user is set as the creator of the recipe.
+        """
+        form.instance.creator = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        """
+        This function overrides the get_success_message() method to add
+        the recipe title into the success message.
+        source: https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
+        """
+        return self.success_message % dict(
+            cleaned_data,
+            calculated_field=self.object.title,
+        )
+
+
+class MyRecipes(generic.ListView):
+    """
+    This view is used to display a list of recipes created by the logged in
+    user.
+    """
+    model = Recipe
+    template_name = 'my_recipes.html'
+    paginate_by = 8
+
+    def get_queryset(self):
+        """Override get_queryset to filter by user"""
+        return Recipe.objects.filter(creator=self.request.user)

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>Update Recipe</h1>
+
+<p>Fixing a mistake? Go on then you messy pup...</p>
+
+<div class="container">
+    <form id="create_form" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit">Update</button>
+    </form>
+</div>
+
+{% endblock %}

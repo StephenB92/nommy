@@ -46,6 +46,14 @@ body {
     background-color: #23BBBB;
 }
 
+.image-flash-draft {
+    position: absolute;
+    bottom: 5%;
+    min-width: 30%;
+    left: -2px;
+    background-color:red;
+}
+
 .author {
     color: white;
     margin: 4px;

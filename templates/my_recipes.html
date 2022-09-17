@@ -3,6 +3,7 @@
 {% block content %}
 
 <div class="container-fluid">
+    <h1>My Recipes</h1>
     <div class="row">
 
         <!-- Recipe Entries Column -->
@@ -19,9 +20,15 @@
                                 {% else %}
                                 <img class="card-img-top" src="{{ recipe.image.url }}">
                                 {% endif %}
-                                <div class="image-flash">
-                                    <p class="author">Created by: {{ recipe.creator }}</p>
+                                {% if recipe.status == 0 %}
+                                <div class="image-flash-draft">
+                                    <p class="author">{{ recipe.get_status_display }}</p>
                                 </div>
+                                {% else %}
+                                <div class="image-flash">
+                                    <p class="author">{{ recipe.get_status_display }}</p>
+                                </div>
+                                {% endif %}
                             </div>
                             <a href="{% url 'recipe_detail' recipe.slug %}" class="recipe-link">
                                 <h2 class="card-title">{{ recipe.dish_id | safe }}</h2>
@@ -30,6 +37,7 @@
                             <hr />
                             <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
                                 {{ recipe.number_of_likes }}</p>
+                                <a href="{% url 'update_recipe' %}"><button class="btn">Edit</button></a>
                         </div>
                     </div>
                 </div>

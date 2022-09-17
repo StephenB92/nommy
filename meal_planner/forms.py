@@ -14,3 +14,11 @@ class CreateRecipeForm(forms.ModelForm):
         fields = ('dish_id', 'suitable_for', 'prep_time', 'cook_time',
                   'description', 'ingredients', 'method',
                   'image', 'status')
+
+
+class UpdateRecipeForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fields = ('dish_id', 'suitable_for', 'prep_time', 'cook_time',
+                  'description', 'ingredients', 'method',
+                  'image', 'status')
