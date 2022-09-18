@@ -10,6 +10,11 @@
                     {{ recipe.dish_id | safe }}
                 </h1>
                 <p class="recipe-subtitle"> {{ recipe.creator }} | {{ recipe.created_on }} </p>
+                {% if user.is_authenticated %}
+                    {% if user.id == recipe.creator.id %}
+                    <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn">Delete</button></a>
+                    {% endif %}
+                    {% endif %}
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->

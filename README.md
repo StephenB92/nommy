@@ -100,6 +100,8 @@ You can view the details of the database schema [here](documentation/database-sc
 ## Bugs and Fixes
 
 - While coding the comment functionality, I kept receiving an error where a user can only post one comment across the entire site. 
+- While creating the CRUD functionality of the site and then bug testing, I saw while playing around with the urls that any user of the site (registered or not) could edit and delete recipes by typing /updaterecipe or /deleterecipe in the url adter the currently viewed recipe. To solve this, I used the LogInRequiredMixin from the Django Authentication system, which redirects unregistered users to the login page (credit below). For other registered users, I used if else statements using Django logic in my update recipe and delete recipe pages. These statements checked if the logged in user matches the "creator" of the recipe. If these don't match, the form will not appear to the user and they are redirected to their "my recipes" page. Credit below.
+
 
 ## Credits/Acknowledgements 
 
@@ -109,4 +111,7 @@ You can view the details of the database schema [here](documentation/database-sc
 - Credit to [this](https://stackoverflow.com/questions/57710135/how-to-print-the-string-value-of-a-choices-field) post on Stack Overflow where I found code to display the status of users recipes as strings on the "My Recipes" page.
 - Credit to [this](https://www.youtube.com/watch?v=aStLddXMJrk&list=WL&index=3&ab_channel=CodingEntrepreneurs) video on Youtube by CodingEntrepreneurs which helped with code for pre-populating the user form in the update view.
 - Credit to [this](https://stackoverflow.com/questions/47636968/django-messages-for-a-successfully-delete-add-or-edit-item) post on Stack Overflow where I found code to provide a successful deletion message to the user. This was necessary as the SuccessMessageMixin does not work in a DeleteView.
+- Credit to the [Django Documentation](https://docs.djangoproject.com/en/4.1/topics/auth/default/) for information on the LoginRequiredMixin.
+- Credit to [this](https://stackoverflow.com/questions/13713077/get-user-information-in-django-templates) article on Stack Overflow for code displaying username on the base.html file.
+Credit to [this](https://www.youtube.com/watch?v=Y1Us5jVT07E&ab_channel=Codemy.com) video on Youtube for the information on if else statements checking if the logged in user matches the "creator" of the recipe.
 

@@ -2,7 +2,8 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseRedirect, Http404
 from django.urls import reverse_lazy
 from .models import Recipe
 from .forms import CommentForm, CreateRecipeForm, UpdateRecipeForm
@@ -78,7 +79,7 @@ class RecipeLikes(View):
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 
-class RecipeCreate(SuccessMessageMixin, generic.CreateView):
+class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = CreateRecipeForm
     template_name = 'create_recipe.html'
     success_message = "%(calculated_field)s was created successfully"
@@ -104,11 +105,20 @@ class RecipeCreate(SuccessMessageMixin, generic.CreateView):
         )
 
 
-class RecipeUpdate(SuccessMessageMixin, generic.UpdateView):
+class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     queryset = Recipe.objects.all()
     form_class = UpdateRecipeForm
     template_name = 'update_recipe.html'
     success_message = "%(calculated_field)s was updated successfully"
+
+    def form_valid(self, form):
+        """
+        This method is called when valid form data has been posted.
+        The signed in user is set as the creator of the recipe.
+        """
+        form.instance.creator = self.request.user
+        form.save()
+        return super().form_valid(form)
 
     def get_success_message(self, cleaned_data):
         """
@@ -122,7 +132,7 @@ class RecipeUpdate(SuccessMessageMixin, generic.UpdateView):
         )
 
 
-class RecipeDelete(generic.DeleteView):
+class RecipeDelete(LoginRequiredMixin, generic.DeleteView):
     queryset = Recipe.objects.all()
     template_name = 'delete_recipe.html'
     success_message = "Recipe was deleted successfully"
@@ -138,7 +148,7 @@ class RecipeDelete(generic.DeleteView):
 
 
 
-class MyRecipes(generic.ListView):
+class MyRecipes(LoginRequiredMixin, generic.ListView):
     """
     This view is used to display a list of recipes created by the logged in
     user.
