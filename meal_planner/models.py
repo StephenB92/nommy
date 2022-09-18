@@ -40,6 +40,12 @@ class Recipe(models.Model):
     def get_absolute_url(self):
         return reverse('recipe_detail', kwargs={'slug': self.slug})
 
+    def get_edit_url(self):
+        return reverse('update_recipe', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('my_recipes', kwargs={'slug': self.slug})
+
     # Credit to Stack Overflow for the "get_STATUS_display" method below.
 
     def get_STATUS_display(self):
