@@ -101,7 +101,8 @@ class RecipeCreate(generic.CreateView):
         )
 
 
-class RecipeUpdate(generic.CreateView):
+class RecipeUpdate(generic.UpdateView):
+    queryset = Recipe.objects.all()
     form_class = UpdateRecipeForm
     template_name = 'update_recipe.html'
     success_message = "%(calculated_field)s was updated successfully"

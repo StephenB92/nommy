@@ -107,3 +107,5 @@ You can view the details of the database schema [here](documentation/database-sc
 - Pexels for the stock images used in this project.
 - Credit to [this](https://stackoverflow.com/questions/837828/how-do-i-create-a-slug-in-django) post on Stack Overflow which solved an issue with new recipes not generating new slugs.
 - Credit to [this](https://stackoverflow.com/questions/57710135/how-to-print-the-string-value-of-a-choices-field) post on Stack Overflow where I found code to display the status of users recipes as strings on the "My Recipes" page.
+Credit to [this](https://www.youtube.com/watch?v=aStLddXMJrk&list=WL&index=3&ab_channel=CodingEntrepreneurs) video on Youtube by CodingEntrepreneurs which helped with code for pre-populating the user form in the update view.
+
