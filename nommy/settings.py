@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cloudinary',
     'django_summernote',
+    'django_extensions',
     'crispy_forms',
     'meal_planner',
 ]

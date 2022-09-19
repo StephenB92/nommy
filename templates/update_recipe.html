@@ -8,14 +8,17 @@
 
 {% if user.is_authenticated %}
     {% if user.id == recipe.creator.id %}
+    <!-- This checks that the user is the original creator of the recipe -->
         <p>Have some changes to make?</p>
 
         <div class="container">
-            <form id="update_form" method="post">
+            <!-- Credit to W3Schools for the enctype code below -->
+            <form method="post" id="update_form" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form | crispy }}
                 <button type="submit">Update</button>
             </form>
+            <a href="{% url 'recipe_detail' recipe.slug %}" class="btn">Cancel</a>
         </div>
         {% else %}
         <p>You do not have permission to update {{ recipe.dish_id }} as you are not the creator.</p>

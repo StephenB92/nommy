@@ -8,9 +8,9 @@
 <p>Please share your recipe below</p>
 
 <div class="container">
-    <form id="create_form" method="post">
-        {% csrf_token %}
+    <form method="post" id="create_form" enctype="multipart/form-data">
         {{ form | crispy }}
+        {% csrf_token %}
         <button type="submit">Create</button>
     </form>
 </div>

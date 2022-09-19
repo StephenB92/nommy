@@ -7,14 +7,15 @@
 
 {% if user.is_authenticated %}
     {% if user.id == recipe.creator.id %}
+    <!-- This checks that the user is the original creator of the recipe -->
         <p>Are you sure you want to delete {{ recipe.dish_id }} from your cookbook?</p>
 
         <div class="container">
-            <form id="delete_form" method="post">
+            <form method="post">
                 {% csrf_token %}
-                {{ form | crispy }}
                 <button type="submit">Delete</button>
             </form>
+            <a href="{% url 'recipe_detail' recipe.slug %}" class="btn">Cancel</a>
         </div>
     {% else %}
     <p>You do not have permission to delete {{ recipe.dish_id }} from Nommy as you are not the creator.</p>

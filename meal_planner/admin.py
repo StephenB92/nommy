@@ -1,3 +1,5 @@
+""" Admin """
+
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 from .models import Recipe, Comment
@@ -5,6 +7,7 @@ from .models import Recipe, Comment
 
 @admin.register(Recipe)
 class RecipeAdmin(SummernoteModelAdmin):
+    """ Settings for the admin recipes panel """
 
     prepopulated_fields = {'slug': ('dish_id',)}
     list_filter = ('status', 'created_on')
@@ -15,11 +18,8 @@ class RecipeAdmin(SummernoteModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    
-    list_display = ('name', 'body', 'recipe', 'created_on', 'approved')
-    list_filter = ('approved', 'created_on')
-    search_fields = ('name', 'body')
-    actions = ['approve_comments']
+    """ Settings for admin comment panel """
 
-    def approve_comments(self, request, queryset):
-        queryset.update(approved=True)
+    list_display = ('name', 'body', 'recipe', 'created_on')
+    list_filter = ('recipe', 'created_on')
+    search_fields = ('name', 'body')

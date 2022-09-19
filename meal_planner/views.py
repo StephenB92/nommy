@@ -1,15 +1,20 @@
+""" Views """
+
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Recipe
 from .forms import CommentForm, CreateRecipeForm, UpdateRecipeForm
 
 
 class RecipeList(generic.ListView):
+    """
+    This view is used to allow the user to view a list of recipes.
+    """
     model = Recipe
     queryset = Recipe.objects.filter(status=1).order_by("-created_on")
     template_name = 'index.html'
@@ -17,10 +22,16 @@ class RecipeList(generic.ListView):
 
 
 class RecipeDetail(generic.DetailView):
+    """
+    This view is used to allow users to view  recipes in detail.
+    """
     def get(self, request, slug, *args, **kwargs):
+        """
+        This function obtains recipe data to display to the user.
+        """
         queryset = Recipe.objects.all()
         recipe = get_object_or_404(queryset, slug=slug)
-        comments = recipe.comments.filter(approved=True).order_by('created_on')
+        comments = recipe.comments.order_by('created_on')
         liked = False
         if recipe.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -38,9 +49,12 @@ class RecipeDetail(generic.DetailView):
         )
 
     def post(self, request, slug, *args, **kwargs):
+        """
+        This function allows logged in users to comment on recipes.
+        """
         queryset = Recipe.objects.filter(status=1)
         recipe = get_object_or_404(queryset, slug=slug)
-        comments = recipe.comments.filter(approved=True).order_by('created_on')
+        comments = recipe.comments.order_by('created_on')
         liked = False
         if recipe.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -51,6 +65,7 @@ class RecipeDetail(generic.DetailView):
             comment = comment_form.save(commit=False)
             comment.recipe = recipe
             comment.save()
+            messages.success(self.request, 'Your comment has been added.')
         else:
             comment_form = CommentForm()
 
@@ -68,7 +83,14 @@ class RecipeDetail(generic.DetailView):
 
 
 class RecipeLikes(View):
+    """
+    This view is used to allow users to see the number of likes
+    attached to recipes.
+    """
     def post(self, request, slug):
+        """
+        This function allows users to like or unlike recipes.
+        """
         recipe = get_object_or_404(Recipe, slug=slug)
 
         if recipe.likes.filter(id=request.user.id).exists():
@@ -79,15 +101,18 @@ class RecipeLikes(View):
         return HttpResponseRedirect(reverse('recipe_detail', args=[slug]))
 
 
-class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
+class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin,
+                   generic.CreateView):
+    """
+    This view is used to allow the logged in user to create their own recipes.
+    """
     form_class = CreateRecipeForm
     template_name = 'create_recipe.html'
     success_message = "%(calculated_field)s was created successfully"
 
     def form_valid(self, form):
         """
-        This method is called when valid form data has been posted.
-        The signed in user is set as the creator of the recipe.
+        This method ensures that the user is set as the creator of the recipe.
         """
         form.instance.creator = self.request.user
         form.save()
@@ -95,9 +120,8 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
 
     def get_success_message(self, cleaned_data):
         """
-        This function overrides the get_success_message() method to add
-        the recipe title into the success message.
-        source: https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
+        This function adds the recipe title into the success message.
+        Credit to the Django Documentation.
         """
         return self.success_message % dict(
             cleaned_data,
@@ -105,7 +129,11 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
         )
 
 
-class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
+class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin,
+                   generic.UpdateView):
+    """
+    This view is used to allow the logged in user to update their recipes.
+    """
     queryset = Recipe.objects.all()
     form_class = UpdateRecipeForm
     template_name = 'update_recipe.html'
@@ -113,8 +141,7 @@ class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
     def form_valid(self, form):
         """
-        This method is called when valid form data has been posted.
-        The signed in user is set as the creator of the recipe.
+        This method ensures that the user is set as the creator of the recipe.
         """
         form.instance.creator = self.request.user
         form.save()
@@ -122,9 +149,8 @@ class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
     def get_success_message(self, cleaned_data):
         """
-        This function overrides the get_success_message() method to add
-        the recipe title into the success message.
-        source: https://docs.djangoproject.com/en/4.0/ref/contrib/messages/
+        This function adds the recipe title into the success message.
+        Credit to the Django Documentation.
         """
         return self.success_message % dict(
             cleaned_data,
@@ -133,19 +159,21 @@ class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
 
 
 class RecipeDelete(LoginRequiredMixin, generic.DeleteView):
+    """
+    This view is used to allow the logged in user to delete their recipes.
+    """
     queryset = Recipe.objects.all()
     template_name = 'delete_recipe.html'
     success_message = "Recipe was deleted successfully"
     success_url = reverse_lazy('my_recipes')
 
     def delete(self, request, *args, **kwargs):
-        """ 
+        """
         This function is used to display a delete message.
         Credit to Stack Overflow.
         """
         messages.warning(self.request, self.success_message)
         return super(RecipeDelete, self).delete(request, *args, **kwargs)
-
 
 
 class MyRecipes(LoginRequiredMixin, generic.ListView):
@@ -158,5 +186,8 @@ class MyRecipes(LoginRequiredMixin, generic.ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        """Override get_queryset to filter by user"""
+        """
+        Function which filters the my recipes page to those
+        created by the user.
+        """
         return Recipe.objects.filter(creator=self.request.user)
