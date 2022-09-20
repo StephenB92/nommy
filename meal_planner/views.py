@@ -183,7 +183,7 @@ class MyRecipes(LoginRequiredMixin, generic.ListView):
     """
     model = Recipe
     template_name = 'my_recipes.html'
-    paginate_by = 8
+    paginate_by = 9
 
     def get_queryset(self):
         """
@@ -191,3 +191,21 @@ class MyRecipes(LoginRequiredMixin, generic.ListView):
         created by the user.
         """
         return Recipe.objects.filter(creator=self.request.user)
+
+
+    
+class LikedRecipes(LoginRequiredMixin, generic.ListView):
+    """
+    This view is used to display a list of recipes liked by the logged in
+    user.
+    """
+    model = Recipe
+    template_name = 'liked_recipes.html'
+    paginate_by = 9
+
+    def get_queryset(self):
+        """
+        Function which filters the my recipes page to those
+        liked by the user.
+        """
+        return Recipe.objects.filter(likes=self.request.user)

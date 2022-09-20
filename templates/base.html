@@ -1,5 +1,5 @@
 {% load static %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 <!DOCTYPE html>
 <html class="h-100">
 
@@ -41,13 +41,14 @@
                         <a class="nav-link" href="{% url 'my_recipes' %}">My Recipes</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'liked_recipes' %}">Liked Recipes</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'create_recipe' %}">Create a Recipe</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
                     </li>
-                    <!-- Credit to Stack Overflow for code displaying username -->
-                    <p>Logged in as: {{ user.get_username }}</p>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">Register</a>
@@ -58,7 +59,8 @@
                     {% endif %}
                 </ul>
                 <span class="navbar-text text-muted">
-                    What's cooking?
+                <!-- Credit to Stack Overflow for code displaying username -->
+                    Welcome, {{ user.get_username }}
                 </span>
             </div>
         </div>
