@@ -1,6 +1,7 @@
 """ Forms """
 
 from django import forms
+from django_summernote.widgets import SummernoteWidget
 from .models import Comment, Recipe
 
 
@@ -10,9 +11,13 @@ class CommentForm(forms.ModelForm):
         """ Sets model and fields for user form """
         model = Comment
         fields = ('body',)
+        widgets = {
+            'body': SummernoteWidget(), 
+        }
 
 
-class CreateRecipeForm(forms.ModelForm):
+
+class RecipeForm(forms.ModelForm):
     """ Create recipe form """
     class Meta:
         """ Sets model and fields for user form """
@@ -20,13 +25,7 @@ class CreateRecipeForm(forms.ModelForm):
         fields = ('dish_id', 'suitable_for', 'prep_time', 'cook_time',
                   'description', 'ingredients', 'method',
                   'image', 'status')
-
-
-class UpdateRecipeForm(forms.ModelForm):
-    """ Update recipe form """
-    class Meta:
-        """ Sets model and fields for user form """
-        model = Recipe
-        fields = ('dish_id', 'suitable_for', 'prep_time', 'cook_time',
-                  'description', 'ingredients', 'method',
-                  'image', 'status')
+        widgets = {
+            'method': SummernoteWidget(), 
+            'ingredients': SummernoteWidget(),
+        }

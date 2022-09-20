@@ -1,21 +1,82 @@
 body {
-    background-color: #F9FAFC;
+    background-color: rgba(192, 192, 192, 0.8);
+    color: #092e2e;
+}
+
+nav {
+    background-color: rgba(161, 32, 32, 0.8);
+    color: white;
+    text-decoration: none;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
 }
 
 .brand {
-    font-family: Lato, sans-serif;
-    font-size: 1.4rem;
+    font-family: Cedarville Cursive, sans-serif;
+    font-size: 3rem;
     font-weight: 700;
-    color: #4A4A4F;
+    color: #cbcbe4;
 }
 
-.red-o {
-    color: #E84610;
+.welcome-message {
+    margin-right: 10px;
+    color:#2ce6e6;
 }
 
-.thin {
-    font-weight: 300;
+.social-links {
+    text-align: center;
+    margin: 5px 0;
+    padding: 0;
 }
+
+.social-links li {
+    display: inline-block;
+}
+
+.social-links i {
+    color: white;
+    padding: 0 30px;
+}
+
+.page-title {
+    border-radius: 2rem;
+    padding: 10px 0px;
+    font-family: Aref Ruqaa Ink, sans-serif;
+    color: black;
+}
+
+.page-title a {
+    text-decoration: underline;
+    color: white;
+}
+
+.user-form {
+    display: block;
+    text-align: center;
+    display: inline-block;
+    color: black;
+}
+
+.user-form button {
+    padding: 15px, 0px;
+}
+
+form {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.recipe-buttons {
+    text-align: center;
+    padding: 5px;
+    display: inline-block;
+}
+
 
 .light-bg {
     background-color: #fff;
@@ -23,10 +84,6 @@ body {
 
 .dark-bg {
     background-color: #445261;
-}
-
-.main-bg {
-    background-color: #F9FAFC;
 }
 
 .card {
@@ -43,7 +100,9 @@ body {
     bottom: 5%;
     min-width: 30%;
     left: -2px;
+    color: #2ce6e6;
     background-color: #23BBBB;
+    font-family: Aref Ruqaa Ink, sans-serif;
 }
 
 .image-flash-draft {
@@ -51,13 +110,15 @@ body {
     bottom: 5%;
     min-width: 30%;
     left: -2px;
+    color: #2ce6e6;
     background-color:red;
+    font-family: Aref Ruqaa Ink, sans-serif;
 }
 
-.author {
+.creator {
     color: white;
     margin: 4px;
-    text-transform: uppercase;
+    font-family: Cedarville Cursive, sans-serif;
 }
 
 .masthead {
@@ -105,6 +166,7 @@ body {
 }
 
 .recipe-title {
+    font-family: Aref Ruqaa Ink, sans-serif;
     margin-top: 20%;
     margin-left: 5%;
 }
@@ -130,8 +192,7 @@ body {
     text-decoration: none;
 }
 
-.link:hover,
-.link:active {
+.link:hover {
     color: #445261;
     text-decoration: underline;
 }

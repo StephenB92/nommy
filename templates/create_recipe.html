@@ -1,17 +1,17 @@
 {% extends "base.html" %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Create Recipe</h1>
 
-<p>Please share your recipe below</p>
-
-<div class="container">
-    <form method="post" id="create_form" enctype="multipart/form-data">
+<div class="container text-center">
+    <!-- Credit to W3Schools for the enctype code below -->
+    <h1 class="page-title">Create Recipe<hr>
+    <h2 class="page-title">Please share your recipe below</h2>
+    <form class="user-form" method="post" id="create_form" enctype="multipart/form-data">
         {{ form | crispy }}
         {% csrf_token %}
-        <button type="submit">Create</button>
+        <button class="btn btn-success" type="submit">Create</button>
     </form>
 </div>
 

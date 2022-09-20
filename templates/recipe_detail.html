@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% load crispy_forms_tags %}
 
 <div class="masthead">
@@ -10,16 +10,12 @@
                     {{ recipe.dish_id | safe }}
                 </h1>
                 <p class="recipe-subtitle"> {{ recipe.creator }} | {{ recipe.created_on }} </p>
-                {% if user.is_authenticated %}
-                    {% if user.id == recipe.creator.id %}
-                    <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn">Delete</button></a>
-                    {% endif %}
-                    {% endif %}
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
                 <!-- The featured image URL goes in the src attribute -->
                 {% if "placeholder" in recipe.image.url %}
-                <img src="https://res.cloudinary.com/ddmcb2ens/image/upload/v1663424044/tewxqdpvyunoombgyohb.jpg" width="100%">
+                <img src="https://res.cloudinary.com/ddmcb2ens/image/upload/v1663424044/tewxqdpvyunoombgyohb.jpg"
+                    width="100%">
                 {% else %}
                 <img src=" {{ recipe.image.url }}" width="100%">
                 {% endif %}
@@ -42,7 +38,7 @@
                 <div class="row">
                     <div class="col-1">
                         <strong>
-                            {% if user.is_authenticated %}
+                            {% if user.is_authenticated and user.id != recipe.creator.id %}
                             <form class="d-inline" action="{% url 'recipe_likes' recipe.slug %}" method="POST">
                                 {% csrf_token %}
                                 {% if liked %}
@@ -56,7 +52,7 @@
                                 {% endif %}
                             </form>
                             {% else %}
-                            <span class="text-secondary"><i class="far fa-heart"></i></span>
+                            <span class="text-secondary"><i class="fas fa-heart"></i></span>
                             {% endif %}
                             <span class="text-secondary">{{ recipe.number_of_likes }}</i></span>
                         </strong>
@@ -68,6 +64,16 @@
                             {{ total_comments }}</strong>
                         {% endwith %}
                     </div>
+                    {% if user.is_authenticated %}
+                    {% if user.id == recipe.creator.id %}
+                    <div class="col-1 recipe-buttons">
+                        <a href="{% url 'update_recipe' slug=recipe.slug %}"><button
+                                class="btn btn-signup">Edit Recipe</button></a>
+                        <a href="{% url 'delete_recipe' slug=recipe.slug %}"><button
+                                class="btn btn-danger">Delete Recipe</button></a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>

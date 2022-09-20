@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% block content %}
 
 <div class="container-fluid">
-    <h1>My Recipes</h1>
+    <h1 class="page-title text-center">My Recipes</h1>
     <div class="row">
 
         <!-- Recipe Entries Column -->
@@ -37,7 +37,7 @@
                             <hr />
                             <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
                                 {{ recipe.number_of_likes }}</p>
-                                <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn">Delete</button></a>
+                                <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn-signup">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn-danger">Delete</button></a>
                         </div>
                     </div>
                 </div>

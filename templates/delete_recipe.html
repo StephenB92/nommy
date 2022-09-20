@@ -1,27 +1,26 @@
 {% extends "base.html" %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>Delete Recipe</h1>
 
-{% if user.is_authenticated %}
-    {% if user.id == recipe.creator.id %}
-    <!-- This checks that the user is the original creator of the recipe -->
-        <p>Are you sure you want to delete {{ recipe.dish_id }} from your cookbook?</p>
-
-        <div class="container">
-            <form method="post">
-                {% csrf_token %}
-                <button type="submit">Delete</button>
-            </form>
-            <a href="{% url 'recipe_detail' recipe.slug %}" class="btn">Cancel</a>
-        </div>
-    {% else %}
-    <p>You do not have permission to delete {{ recipe.dish_id }} from Nommy as you are not the creator.</p>
-    <hr>
-    <p>To view your created recipes, please click <a href="{% url 'my_recipes' %}">here</a>.</p>
-    {% endif %}
-    {% endif %}
-
+<div class="container text-center">
+    <h1 class="page-title">Delete Recipe</h1>
+    {% if user.is_authenticated %}
+        {% if user.id == recipe.creator.id %}
+        <!-- This checks that the user is the original creator of the recipe -->
+            <h2 class="page-title">Are you sure you want to delete {{ recipe.dish_id }} from your cookbook?</h2>
+                <form class="user-form" method="post">
+                    {% csrf_token %}
+                    <button class="btn-danger"type="submit">Delete</button>
+                    <button class="btn-like"><a href="{% url 'recipe_detail' recipe.slug %}" >Cancel</a></button>
+                </form>
+            </div>
+        {% else %}
+        <h2>You do not have permission to delete {{ recipe.dish_id }} from Nommy as you are not the creator.</h2>
+        <hr>
+        <p>To view your created recipes, please click <a href="{% url 'my_recipes' %}">here</a>.</p>
+        {% endif %}
+        {% endif %}
+</div>
 {% endblock %}

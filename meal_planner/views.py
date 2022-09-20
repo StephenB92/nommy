@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from .models import Recipe
-from .forms import CommentForm, CreateRecipeForm, UpdateRecipeForm
+from .forms import CommentForm, RecipeForm
 
 
 class RecipeList(generic.ListView):
@@ -106,7 +106,7 @@ class RecipeCreate(LoginRequiredMixin, SuccessMessageMixin,
     """
     This view is used to allow the logged in user to create their own recipes.
     """
-    form_class = CreateRecipeForm
+    form_class = RecipeForm
     template_name = 'create_recipe.html'
     success_message = "%(calculated_field)s was created successfully"
 
@@ -135,7 +135,7 @@ class RecipeUpdate(LoginRequiredMixin, SuccessMessageMixin,
     This view is used to allow the logged in user to update their recipes.
     """
     queryset = Recipe.objects.all()
-    form_class = UpdateRecipeForm
+    form_class = RecipeForm
     template_name = 'update_recipe.html'
     success_message = "%(calculated_field)s was updated successfully"
 

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+<!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% block content %}
 
 <div class="container-fluid">
-    <h1>Liked Recipes</h1>
+    <h1 Class="page-title text-center">Liked Recipes</h1>
     <div class="row">
         <!-- Column displaying liked recipes -->
         <div class="col-12 mt-3 left">
@@ -36,7 +36,9 @@
                             <hr />
                             <p class="card-text text-muted h6">{{ recipe.created_on}} <i class="far fa-heart"></i>
                                 {{ recipe.number_of_likes }}</p>
-                                <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn">Delete</button></a>
+                                {% if user.id == recipe.creator.id %}
+                                <a href="{% url 'update_recipe' slug=recipe.slug %}"><button class="btn-signup">Edit</button></a><a href="{% url 'delete_recipe' slug=recipe.slug %}"><button class="btn-danger">Delete</button></a>
+                                {% endif %}
                         </div>
                     </div>
                 </div>
