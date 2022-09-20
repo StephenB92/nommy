@@ -35,9 +35,13 @@ The app is essentially a database of recipes that also allows users to add their
 
 ### Design
 
+The site layout and navigation are intended to be very simplistic with the focus being on the recipes on display. 
+
 #### Colour Scheme
 
 #### Imagery
+
+All imagery on site is uploaded by users and displayed with their relevant recipe. The site includes a placeholder image also.
 
 #### Typography
 
@@ -67,15 +71,11 @@ Please view the Github projects board [here](https://github.com/users/StephenB92
 
 Custom models are used throughout the project.
 
-To facilitate users creating their own recipes, a custom recipe model is required.
+The Django AllAuth feature is used for user authentication. To facilitate users creating their own recipes, a custom recipe model is required. The creator of the recipe is set as a foreign key to the AllAuth user model as a recipe should only have one creator. 
 
-To facilitate users commenting on recipes, a custom comment model is required.
-
-To facilitate users creating their own profiles, a custom user profile model is required.
+To facilitate users commenting on recipes, a custom comment model is required. Here, the recipe is the foreign key as a comment can only relate to one recipe.
 
 You can view the details of the database schema [here](documentation/database-schema/database-schema.png).
-
-## Deployment
 
 ## Technologies Used
 
@@ -85,13 +85,68 @@ You can view the details of the database schema [here](documentation/database-sc
 3. Python
 
 ### Frameworks, Libraries and Online Tools
-1. Django
-2. Bootstrap
-3. Github - used for agile method of planning and for version control of the project
-4. Heroku - used for site deployment
-3. Lucidchart - used to map the database schema
-4. Balsamiq - used to create wireframes
+* Django
+* Bootstrap
+* Github - used for agile method of planning and for version control of the project
+* Heroku - used for site deployment
+* PostgreSQL - database used on heroku
+* Lucidchart - used to map the database schema
+* Balsamiq - used to create wireframes
+* Cloudinary - used for database image storage
+* Django Allauth for user authentication
+* Summernote - used for users to edit text
+* Crispy forms - used to create forms
 
+## Deployment - Heroku
+
+### To deploy this page to Heroku from its GitHub repository, the following steps were taken:
+
+<br>
+
+### Create the Heroku App:
+- Log in to Heroku or create an account.
+- On the main page click the button labelled New in the top right corner and from the drop-down menu select "Create New App".
+- Enter a unique app name.
+- Next select region.
+- Click on the Create App button.
+### Attach the Postgres database:
+- In the Resources tab, under add-ons, type in Postgres and select the Heroku Postgres option.
+- Copy the DATABASE_URL located in Config Vars in the Settings Tab.
+### Prepare the environment and settings.py file:
+- In your code editor, create an env.py file in the main directory.
+- Add the DATABASE_URL value and your chosen SECRET_KEY value to the env.py file.
+- Update the settings.py file to import the env.py file and add the SECRETKEY and DATABASE_URL file paths.
+- Comment out the default database configuration.
+- Save files and make migrations.
+- Add Cloudinary URL to env.py
+- Add the cloudinary libraries to the list of installed apps.
+- Add the STATIC files settings - the url, storage path, directory path, root path, media url and default file storage path.
+- Link the file to the templates directory in Heroku.
+- Change the templates directory to TEMPLATES_DIR
+- Add Heroku to the ALLOWED_HOSTS list the format ['app_name.heroku.com', 'localhost']
+### Create files / directories
+- Create requirements.txt file
+- Create three directories in the main directory; media, storage and templates.
+- Create a file named "Procfile" in the main directory and add the following: web: gunicorn project-name.wsgi
+### Update Heroku Config Vars
+- Add the following Config Vars in Heroku:
+SECRET_KEY value<br>
+CLOUDINARY_URL<br>
+PORT = 8000<br>
+DISABLE_COLLECTSTATIC = 1
+
+## Security/Authentication Features
+
+### User Authentication
+- The LoginRequiredMixin is used to redirect unauthenticated users to the login page and prevent them from accessing secure pages.
+
+### Form Validation
+
+If required areas of the user forms are left blank, the form will not submit and a warning will notify users as to what fields are causing the error.
+
+### Database security
+- The database url and secret key are stored in the env.py file to prevent unwanted connections to the database. The env.py file is included in the .gitignore file.
+- Cross-Site Request Forgery (CSRF) tokens were used on all forms.
 
 
 
@@ -102,9 +157,10 @@ You can view the details of the database schema [here](documentation/database-sc
 - While coding the comment functionality, I kept receiving an error where a user can only post one comment across the entire site. 
 - While creating the CRUD functionality of the site and then bug testing, I saw while playing around with the urls that any user of the site (registered or not) could edit and delete recipes by typing /updaterecipe or /deleterecipe in the url adter the currently viewed recipe. To solve this, I used the LogInRequiredMixin from the Django Authentication system, which redirects unregistered users to the login page (credit below). For other registered users, I used if else statements using Django logic in my update recipe and delete recipe pages. These statements checked if the logged in user matches the "creator" of the recipe. If these don't match, the form will not appear to the user and they are redirected to their "my recipes" page. Credit below.
 - While testing the project, I realised that user uploaded images from the site were not being saved to Cloudinary. After researching om W3S, I found that the "enctype" attribute with the value of "multipart/form-data" was required here. Credit below.
+- At an earlier stage of development, I received a notification from Git Guardian that my database details had been exposed in my last commit. I reviewed my commit history and saw that my .vscode/launch.json had exposed the details and was not included in my .gitignore file. This required me to re-write my commit history to remove the data and ensure the file was in my .gitignore file going forward. Credit below.
 
 
-## Credits/Acknowledgements 
+## Credits 
 
 - The Code Institute Walkthrough Project: "I think therefore I blog".
 - Pexels for the stock images used in this project.
@@ -117,4 +173,8 @@ Credit to the [Django Documentation](https://docs.djangoproject.com/en/4.0/ref/c
 - Credit to [this](https://stackoverflow.com/questions/13713077/get-user-information-in-django-templates) article on Stack Overflow for code displaying username on the base.html file.
 Credit to [this](https://www.youtube.com/watch?v=Y1Us5jVT07E&ab_channel=Codemy.com) video on Youtube for the information on if else statements checking if the logged in user matches the "creator" of the recipe.
 - Credit to [W3S](https://www.w3schools.com/tags/att_form_enctype.asp) for the information on "enctype" attribute which is necessary for users uploading files as part of recipe creation.
+- Credit to [this](https://dev.to/sophie/how-to-delete-a-secret-file-from-github-ing) article on Dev.to which provided information on how to re-write my commit history to remove the exposed secret data.
 
+## Acknowledgements
+- My mentor Narender Singh for continuous helpful feedback.
+- Tutor support and student care at Code Institute for their support.
