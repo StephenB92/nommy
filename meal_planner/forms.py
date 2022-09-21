@@ -11,10 +11,6 @@ class CommentForm(forms.ModelForm):
         """ Sets model and fields for user form """
         model = Comment
         fields = ('body',)
-        widgets = {
-            'body': SummernoteWidget(), 
-        }
-
 
 
 class RecipeForm(forms.ModelForm):

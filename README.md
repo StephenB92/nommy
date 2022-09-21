@@ -39,11 +39,15 @@ The site layout and navigation are intended to be very simplistic with the focus
 
 #### Colour Scheme
 
+The dark shades of colour on the page are to make the user feel comfortable. Font color is also changed where needed to match the background.
+
 #### Imagery
 
 All imagery on site is uploaded by users and displayed with their relevant recipe. The site includes a placeholder image also.
 
 #### Typography
+
+The font Cedarville Cursive was used for the "Nommy" logo in the navbar. The font family Aref Ruqaa Ink is used for recipe titles and creator names. These fonts were chosen as they fit the elegant design of the site. For informative text regarding ingredients and methods, Roboto is used for its readibility. In all cases, sans-serif is set as the default font.
 
 
 

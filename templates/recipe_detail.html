@@ -2,9 +2,8 @@
 <!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% load crispy_forms_tags %}
 
-<div class="masthead">
     <div class="container">
-        <div class="row g-0">
+        <div class="row">
             <div class="col-md-6 masthead-text">
                 <h1 class="recipe-title">
                     {{ recipe.dish_id | safe }}
@@ -20,21 +19,43 @@
                 <img src=" {{ recipe.image.url }}" width="100%">
                 {% endif %}
             </div>
-            <div class="col">
-                <div class="card-body">
-                    {{ recipe.description | safe }}
+            <div class="row">
+                <div class="col">
+                    <p>Prep Time: {{ recipe.prep_time | safe }}</p>
+                    <p>Cook Time: {{ recipe.cook_time | safe }}</p>
                 </div>
             </div>
         </div>
     </div>
+<div class="container recipe_info">
+    <div class="col card mb-4  mt-3">
+        <div class="card-body">
+            <h5>Description:</h5>
+            <p class="card-text">
+                {{ recipe.description | safe }}
+            </p>
+        </div>
+    </div>
+    <div class="col card mb-4  mt-3">
+        <div class="card-body">
+            <h5>Ingredients:</h5>
+            <p class="card-text">
+                {{ recipe.ingredients | safe }}
+            </p>
+        </div>
+    </div>
+    <div class="col card mb-4  mt-3">
+        <div class="card-body">
+            <h5>Method:</h5>
+            <p class="card-text">
+                {{ recipe.method | safe }}
+            </p>
+        </div>
+    </div>    
 </div>
 <div class="container">
     <div class="row">
         <div class="col card mb-4  mt-3 left  top">
-            <div class="card-body top">
-                <p class="card-text">
-                    {{ recipe.method | safe }}
-                </p>
                 <div class="row">
                     <div class="col-1">
                         <strong>
@@ -78,12 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <hr>
-        </div>
-    </div>
-    <div class="row">
+    <div class="container">
         <div class="col card mb-4  mt-3 ">
             <h3>Comments:</h3>
             <div class="card-body">

@@ -53,6 +53,11 @@ nav a {
     color: white;
 }
 
+.recipe-info {
+    padding:20px;
+    margin: 5px;
+}
+
 .user-form {
     display: block;
     text-align: center;
