@@ -193,7 +193,6 @@ class MyRecipes(LoginRequiredMixin, generic.ListView):
         return Recipe.objects.filter(creator=self.request.user)
 
 
-    
 class LikedRecipes(LoginRequiredMixin, generic.ListView):
     """
     This view is used to display a list of recipes liked by the logged in

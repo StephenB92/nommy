@@ -1,10 +1,7 @@
 {% extends "base.html" %}
 <!-- Credit to Code Institute I think therefore I blog project for the html templates-->
 {% load crispy_forms_tags %}
-
 {% block content %}
-
-
 <div class="container text-center">
     <h1 class="page-title">Update Recipe</h1><hr>
     {% if user.is_authenticated %}
@@ -19,7 +16,7 @@
         <a href="{% url 'recipe_detail' recipe.slug %}" class="btn btn-danger">Cancel</a>
     </form>
     {% else %}
-    <p>You do not have permission to update {{ recipe.dish_id }} as you are not the creator.</p>
+    <h2>You do not have permission to update {{ recipe.dish_id }} as you are not the creator.</h2>
     <hr>
     <p>To view your created recipes, please click <a href="{% url 'my_recipes' %}">here</a>.</p>
     {% endif %}
