@@ -16,15 +16,13 @@ The app is essentially a database of recipes that also allows users to add their
 - As a site user, I want to view a paginated list of recipes, so I can decide on which one to view.
 - As a site user, I want to be able to click on a recipe to view the ingredients, cook time and method of cooking.
 - As a site user, I want to be able to view the number of likes on each recipe so that I can see which is the most popular.
-- As a site user, I want to be able to view and share receipes with my friends.
 
 #### Epic - User Profile
 - As a site user, I want to be able to create my own account so I can create my own recipes, save existing recipes as favourites and comment/like other users recipes.
 - As a registered site user, I want to be able to log in and log out of my account safely and securely.
-- As a site user, I want to be able to view my statistics such as how many recipes I've added, how many I have in my favourites and how many recipes I've commented on.
 
 #### Epic - Recipe Interaction
-- As a registered user, I want to be able to add recipes to my favourites list so I can find them easily in future.
+- As a registered user, I want to be able to add recipes to my likes list so I can find them easily in future.
 - As a registered user, I want to be able to create my own recipes to add to the app.
 - As a registered user, I want to be able to edit recipes I have created, for example to add tips, or make other changes.
 - As a registered user, I want to be able to view my favourite recipes in one location.
@@ -32,6 +30,9 @@ The app is essentially a database of recipes that also allows users to add their
 - As a registered user, I want to be able to comment on other recipes and leave feedback.
 - As a registered user, I want to be able to like other recipes to help bring them to the attention of other users. 
 
+#### Future Implementations
+- User profile page: - As a site user, I want to be able to view my statistics such as how many recipes I've added, how many I have in my favourites and how many recipes I've commented on.
+- Sharing recipes: - As a site user, I want to be able to view and share receipes with my friends.
 
 ### Design
 
@@ -43,13 +44,11 @@ The dark shades of colour on the page are to make the user feel comfortable. Fon
 
 #### Imagery
 
-All imagery on site is uploaded by users and displayed with their relevant recipe. The site includes a placeholder image also.
+All imagery on site is uploaded by users and displayed with their relevant recipe. The site includes a placeholder image also if a user has no image to upload.
 
 #### Typography
 
 The font Cedarville Cursive was used for the "Nommy" logo in the navbar. The font family Aref Ruqaa Ink is used for recipe titles and creator names. These fonts were chosen as they fit the elegant design of the site. For informative text regarding ingredients and methods, Roboto is used for its readibility. In all cases, sans-serif is set as the default font.
-
-
 
 
 #### Wireframes
@@ -62,6 +61,67 @@ The font Cedarville Cursive was used for the "Nommy" logo in the navbar. The fon
 
 
 ## Features
+
+### The Navbar
+
+The Nommy navbar features links to other pages on the site. When the user is not logged in, they will only see the logo, register and sign-in links. When the user logs in however, they are able to see links to their "my recipes" and "liked recipes" pages.
+![Navbar Screenshot](documentation/screenshots/nav-bar.png)
+
+### The Footer
+
+The Nommy footer is simple and just includes the copyright logo and links to Nommy social media.
+![Footer Screenshot](documentation/screenshots/footer.png)
+
+### Home page
+
+The site home page lists recipes created by users. On the home page, only the dish name, creator and image are visible.
+![Home Screenshot](documentation/screenshots/home-page.png)
+
+### View Recipe Page
+
+When a user clicks on the recipe title, they are brought to the recipes page which includes all of the information the user needs on ingredients, method and cooking time.
+![View Recipe Screenshot](documentation/screenshots/recipe-detail.png)
+
+### Log in page
+
+The site includes a user authentication app, thanks to Django Authentication.
+![Login Screenshot](documentation/screenshots/sign-in.png)
+
+### Register page
+
+The site includes a user authentication app, thanks to Django Authentication.
+![Signup Screenshot](documentation/screenshots/sign-up.png)
+
+### Sign out page
+
+The site includes a user authentication app, thanks to Django Authentication.
+![Signout Screenshot](documentation/screenshots/sign-out.png)
+
+### Create recipe
+
+The site includes a user form to create new recipes to add to the site. Summernote widgets are used here to provide more user freedom.
+![Create Recipe Screenshot](documentation/screenshots/create-recipe.png)
+
+### Update recipe
+
+The site includes a user form to create new recipes to add to the site. Summernote widgets are used here to provide more user freedom. Only the creator of the recipe can update it and it is pre-populated from the existing database record.
+![Update Screenshot](documentation/screenshots/update-recipe.png)
+
+### Delete recipe
+
+The site includes a short form allowing users to delete recipes they no longer want. Only the creator of the recipe can update it.
+![Delete Screenshot](documentation/screenshots/delete-recipe.png)
+
+### Likes / Liked Recipe page
+
+When a user leaves a like on a recipe, the recipe is also added to this page so the user can view all of their liked recipes in one location.
+![Liked recipe Screenshot](documentation/screenshots/liked-recipes.png)
+
+### My Recipes page
+
+When a user creates a recipe, the recipe is also added to this page so the user can view all of their created recipes in one location. They are also told which recipes are published and which are still drafts.
+![My recipes Screenshot](documentation/screenshots/my-recipe.png)
+
 
 ## Agile Methodology
 
