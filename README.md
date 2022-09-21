@@ -324,7 +324,8 @@ The below manual tests were carried out prior to submission
 8. Delete recipes page
 - If the user clicks the delete button under their recipe (in the detail page or in the my recipes page) they are immediately brought to the delete recipes page. A message asking the user if they're sure they want to delete the recipe appears along with a delete button. The delete button is confirmed to work as the recipe is immediately removed. Django logic is used in the html file to only display the form on the page if the current user id matches that of the recipe creator. Otherwise, they are met with a message saying that they do not have permission to delete the recipe and are then prompted to return to their my recipes page. This has been tested and confirmed to work as a way of preventing users from changing other users data.
 
-#### All user actions have been tested also (create/update/delete recipe, leave comment, login/logout/signup) and in all cases, a message is displayed to the user confirming the action has been successful.
+### JavaScript
+- JavaScript is used to display messages to the user, depending on their actions. All user actions have been tested also (create/update/delete recipe, leave comment, login/logout/signup) and in all cases, a message is displayed to the user confirming the action has been successful.
 
 <br>
 
